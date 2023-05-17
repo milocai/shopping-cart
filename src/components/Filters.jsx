@@ -1,12 +1,19 @@
 /* eslint-disable react/prop-types */
-import { useId, useState } from "react"
+import { useId } from "react"
 import "./Filters.css"
 import { useFilters } from "../hooks/useFilters"
+import { products as productsData } from "../mocks/products.json"
+
+const getUniqueCategories = (products) => {
+    const categories = products.map( product => product.category )
+    return [ ...new Set(categories) ]
+}
 
 export const Filters = () => {
   
-  
     const { filters, setFilters } = useFilters()
+
+    const categories = getUniqueCategories(productsData)
 
     const minPriceFilterId = useId()
     const categoryFilterId = useId()
@@ -44,9 +51,18 @@ export const Filters = () => {
             <div>
                 <label htmlFor={ categoryFilterId }>Category</label>
                 <select id={ categoryFilterId } onChange={ handleCategoryChange }>
-                    <option value="all">all</option>
+                    {/* <option value="all">all</option>
                     <option value="laptops">laptops</option>
-                    <option value="smartphones">smartphones</option>
+                    <option value="smartphones">smartphones</option> */}
+
+                    {
+                        categories.map( category => (
+                            <option key={ category } value={ category }>
+                                { category }
+                            </option>
+                        ))
+                    }
+
                 </select>
             </div>
         </section>
