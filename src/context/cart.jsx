@@ -2,13 +2,19 @@ import { createContext, useReducer } from "react";
 
 export const CartContext = createContext();
 
+export const CART_ACTIONS_TYPES = {
+    ADD_TO_CART: "ADD_TO_CART",
+    REMOVE_FROM_CART: "REMOVE_FROM_CART",
+    CLEAR_CART: "CLEAR_CART"
+} 
+
 const initialState = []
 
 const reducer = (state, action) => {
     const { type, payload } = action
 
     switch(type){
-        case "ADD_TO_CART": {
+        case CART_ACTIONS_TYPES.ADD_TO_CART: {
             
             const productInCartIndex = state.findIndex(item => item.id === payload.id)
 
@@ -21,11 +27,11 @@ const reducer = (state, action) => {
             return [...state, {...payload, quantity: 1}]
         }
 
-        case "REMOVE_FROM_CART": {
+        case CART_ACTIONS_TYPES.REMOVE_FROM_CART: {
             return state.filter(item => item.id !== payload.id)
         }
 
-        case "CLEAR_CART": {
+        case CART_ACTIONS_TYPES.CLEAR_CART: {
             return initialState
         }
     }
